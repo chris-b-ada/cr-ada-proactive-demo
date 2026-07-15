@@ -414,9 +414,20 @@
       }
     };
 
-    // Manual replay button (handy for live demos) — bypasses the guard.
+    // Manual replay button (handy for live demos).
+    // A proactive only shows once per session, so a plain re-trigger is a no-op.
+    // reset() clears that session state; once it settles we fire again.
     document.getElementById('replayBtn').addEventListener('click', function () {
-      fireProactive(true);
+      var btn = this;
+      btn.disabled = true;
+      var done = function () {
+        setTimeout(function () { fireProactive(true); btn.disabled = false; }, 700);
+      };
+      if (window.adaEmbed && typeof window.adaEmbed.reset === 'function') {
+        Promise.resolve(window.adaEmbed.reset()).then(done, done);
+      } else {
+        done();
+      }
     });
   </script>
 
