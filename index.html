@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consumer Reports — Reviews, Ratings & Buying Advice</title>
+  <title>Consumer Reports Demo — Ada Proactive Engagement</title>
   <style>
     :root {
       --cr-red: #ee3124;
@@ -56,6 +56,11 @@
     }
     .logo .word { font-weight: 800; font-size: 22px; letter-spacing: -.5px; }
     .logo .word span { color: var(--cr-red); }
+    .logo .demo-badge {
+      background: var(--cr-dark); color: var(--cr-yellow); font-weight: 800;
+      font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+      padding: 3px 7px; border-radius: 3px; margin-left: 4px;
+    }
 
     .search {
       flex: 1; display: flex; align-items: center;
@@ -192,8 +197,8 @@
 <body>
 
   <div class="demo-note">
-    Demo environment · Ada proactive fires on load, injecting the first name from the profile menu →
-    <button id="replayBtn" style="margin-left:8px;cursor:pointer;border:0;background:var(--cr-red);color:#fff;padding:3px 10px;border-radius:3px;font-weight:700;">Replay proactive</button>
+    <strong>DEMO</strong> · Fictional page built by Ada to showcase a proactive chat engagement · Not affiliated with or endorsed by Consumer Reports
+    <button id="replayBtn" style="margin-left:12px;cursor:pointer;border:0;background:var(--cr-red);color:#fff;padding:3px 10px;border-radius:3px;font-weight:700;">Replay proactive</button>
   </div>
 
   <!-- Utility bar -->
@@ -214,6 +219,7 @@
       <a href="#" class="logo">
         <span class="mark">CR</span>
         <span class="word">Consumer<span>Reports</span></span>
+        <span class="demo-badge">Demo</span>
       </a>
       <div class="search">
         <span class="icon">&#128269;</span>
