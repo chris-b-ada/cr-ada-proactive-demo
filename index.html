@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consumer Reports — Reviews, Ratings & Buying Advice</title>
+  <style>
+    :root {
+      --cr-red: #ee3124;
+      --cr-dark: #1a1a1a;
+      --cr-yellow: #ffd200;
+      --ink: #222;
+      --muted: #6b6b6b;
+      --line: #e4e4e4;
+      --bg: #f6f6f4;
+      --green: #2e8540;
+      --amber: #f0a202;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ---------- Top utility bar ---------- */
+    .utility {
+      background: var(--cr-dark);
+      color: #fff;
+      font-size: 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .utility .wrap {
+      max-width: 1180px; margin: 0 auto; padding: 8px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .utility a { color: #d8d8d8; margin-left: 18px; }
+    .utility a:hover { color: #fff; }
+
+    /* ---------- Masthead ---------- */
+    .masthead {
+      background: #fff; border-bottom: 1px solid var(--line);
+    }
+    .masthead .wrap {
+      max-width: 1180px; margin: 0 auto; padding: 18px 20px;
+      display: flex; align-items: center; gap: 28px;
+    }
+    .logo { display: flex; align-items: center; gap: 12px; }
+    .logo .mark {
+      background: var(--cr-red); color: #fff; font-weight: 800;
+      font-size: 22px; letter-spacing: -1px; padding: 6px 10px; border-radius: 3px;
+    }
+    .logo .word { font-weight: 800; font-size: 22px; letter-spacing: -.5px; }
+    .logo .word span { color: var(--cr-red); }
+
+    .search {
+      flex: 1; display: flex; align-items: center;
+      background: var(--bg); border: 1px solid var(--line); border-radius: 24px;
+      padding: 8px 16px; max-width: 460px;
+    }
+    .search input {
+      border: 0; background: transparent; outline: none; width: 100%; font-size: 14px;
+    }
+    .search .icon { color: var(--muted); margin-right: 8px; }
+
+    .masthead-actions { margin-left: auto; display: flex; align-items: center; gap: 20px; }
+    .btn-join {
+      background: var(--cr-red); color: #fff; font-weight: 700; font-size: 13px;
+      padding: 10px 18px; border-radius: 4px; text-transform: uppercase; letter-spacing: .03em;
+    }
+
+    /* ---------- Profile menu ---------- */
+    .profile {
+      position: relative; display: flex; align-items: center; gap: 10px; cursor: pointer;
+      padding: 4px 8px; border-radius: 24px;
+    }
+    .profile:hover { background: var(--bg); }
+    .profile .avatar {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: linear-gradient(135deg, #ee3124, #ff7a5c);
+      color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+    .profile .who { line-height: 1.1; }
+    .profile .who .greet { font-size: 11px; color: var(--muted); }
+    .profile .who .name { font-size: 14px; font-weight: 700; }
+    .profile .caret { color: var(--muted); font-size: 10px; }
+
+    /* ---------- Nav ---------- */
+    .nav {
+      background: #fff; border-bottom: 1px solid var(--line);
+    }
+    .nav .wrap {
+      max-width: 1180px; margin: 0 auto; padding: 0 20px;
+      display: flex; gap: 26px;
+    }
+    .nav a {
+      padding: 14px 0; font-size: 14px; font-weight: 600; color: #333;
+      border-bottom: 3px solid transparent;
+    }
+    .nav a:hover, .nav a.active { border-bottom-color: var(--cr-red); color: #000; }
+
+    /* ---------- Layout ---------- */
+    .container {
+      max-width: 1180px; margin: 28px auto; padding: 0 20px;
+      display: grid; grid-template-columns: 1fr 300px; gap: 28px;
+    }
+    @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      background: linear-gradient(120deg, #1a1a1a, #333);
+      color: #fff; border-radius: 10px; overflow: hidden; margin-bottom: 26px;
+      display: grid; grid-template-columns: 1.2fr 1fr;
+    }
+    @media (max-width: 700px) { .hero { grid-template-columns: 1fr; } }
+    .hero .txt { padding: 40px; }
+    .hero .kicker { color: var(--cr-yellow); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+    .hero h1 { font-size: 32px; margin: 10px 0 12px; line-height: 1.15; }
+    .hero p { color: #cfcfcf; margin: 0 0 20px; }
+    .hero .cta { background: var(--cr-red); color: #fff; font-weight: 700; padding: 12px 22px; border-radius: 4px; display: inline-block; }
+    .hero .pic {
+      background: url('https://images.unsplash.com/photo-1556909212-d5b604d0c90d?auto=format&fit=crop&w=800&q=60') center/cover;
+      min-height: 240px;
+    }
+
+    /* ---------- Section ---------- */
+    .section-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      border-bottom: 2px solid var(--cr-dark); padding-bottom: 8px; margin-bottom: 18px;
+    }
+    .section-head h2 { font-size: 20px; margin: 0; }
+    .section-head a { color: var(--cr-red); font-weight: 700; font-size: 13px; }
+
+    .cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      background: #fff; border: 1px solid var(--line); border-radius: 8px; overflow: hidden;
+      transition: box-shadow .15s, transform .15s;
+    }
+    .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.09); transform: translateY(-2px); }
+    .card .img { height: 150px; background-size: cover; background-position: center; }
+    .card .body { padding: 16px; }
+    .card .cat { font-size: 11px; color: var(--cr-red); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+    .card h3 { font-size: 16px; margin: 6px 0 10px; }
+    .rating { display: flex; align-items: center; gap: 8px; }
+    .score {
+      width: 34px; height: 34px; border-radius: 50%; color: #fff; font-weight: 800; font-size: 13px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .score.good { background: var(--green); }
+    .score.mid  { background: var(--amber); }
+    .rating .label { font-size: 12px; color: var(--muted); }
+    .lock { font-size: 11px; color: var(--muted); margin-top: 10px; }
+
+    /* ---------- Sidebar / ads ---------- */
+    aside { display: flex; flex-direction: column; gap: 22px; }
+    .ad {
+      border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: #fff;
+    }
+    .ad .tag { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; padding: 6px 10px; border-bottom: 1px solid var(--line); }
+    .ad-membership {
+      background: linear-gradient(135deg, var(--cr-red), #b81f16); color: #fff; padding: 22px;
+    }
+    .ad-membership h4 { margin: 0 0 6px; font-size: 18px; }
+    .ad-membership p { margin: 0 0 14px; font-size: 13px; color: #ffe3e0; }
+    .ad-membership .price { font-size: 30px; font-weight: 800; }
+    .ad-membership .price small { font-size: 13px; font-weight: 500; }
+    .ad-membership .go { background: #fff; color: var(--cr-red); font-weight: 800; padding: 10px 0; border-radius: 4px; text-align: center; margin-top: 12px; }
+    .ad-house { padding: 20px; text-align: center; }
+    .ad-house .box { background: #eee; border-radius: 6px; height: 220px; display: flex; align-items: center; justify-content: center; color: #aaa; font-size: 13px; }
+
+    /* ---------- Footer ---------- */
+    footer { background: var(--cr-dark); color: #cfcfcf; margin-top: 40px; }
+    footer .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 20px; display: flex; flex-wrap: wrap; gap: 40px; }
+    footer h5 { color: #fff; font-size: 13px; text-transform: uppercase; letter-spacing: .05em; margin: 0 0 12px; }
+    footer a { display: block; font-size: 13px; margin-bottom: 8px; color: #b6b6b6; }
+    footer .fine { width: 100%; border-top: 1px solid #333; padding-top: 20px; font-size: 12px; color: #888; }
+
+    /* demo helper banner */
+    .demo-note {
+      background: #fff8d6; border: 1px solid var(--cr-yellow); color: #7a5c00;
+      font-size: 12px; padding: 8px 20px; text-align: center;
+    }
+    .demo-note code { background: rgba(0,0,0,.06); padding: 1px 5px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+  <div class="demo-note">
+    Demo environment · Ada proactive fires on load, injecting the first name from the profile menu →
+    <button id="replayBtn" style="margin-left:8px;cursor:pointer;border:0;background:var(--cr-red);color:#fff;padding:3px 10px;border-radius:3px;font-weight:700;">Replay proactive</button>
+  </div>
+
+  <!-- Utility bar -->
+  <div class="utility">
+    <div class="wrap">
+      <span>Independent. Nonprofit. Since 1936.</span>
+      <nav>
+        <a href="#">Donate</a>
+        <a href="#">Take Action</a>
+        <a href="#">Help</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Masthead -->
+  <header class="masthead">
+    <div class="wrap">
+      <a href="#" class="logo">
+        <span class="mark">CR</span>
+        <span class="word">Consumer<span>Reports</span></span>
+      </a>
+      <div class="search">
+        <span class="icon">&#128269;</span>
+        <input placeholder="Search reviews, products, and ratings" />
+      </div>
+      <div class="masthead-actions">
+        <!-- The name below is what the proactive reads. Change "Chris Broughton" to test. -->
+        <div class="profile" id="profileMenu">
+          <span class="avatar" id="profileAvatar">C</span>
+          <span class="who">
+            <span class="greet">Welcome back,</span>
+            <span class="name" id="profileName">Chris Broughton</span>
+          </span>
+          <span class="caret">&#9660;</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Nav -->
+  <nav class="nav">
+    <div class="wrap">
+      <a href="#" class="active">Home</a>
+      <a href="#">Cars</a>
+      <a href="#">Appliances</a>
+      <a href="#">Electronics</a>
+      <a href="#">Health</a>
+      <a href="#">Home &amp; Garden</a>
+      <a href="#">Money</a>
+      <a href="#">Babies &amp; Kids</a>
+    </div>
+  </nav>
+
+  <!-- Body -->
+  <div class="container">
+    <main>
+      <div class="hero">
+        <div class="txt">
+          <div class="kicker">2026 Top Picks</div>
+          <h1>The best products of the year, tested in our labs</h1>
+          <p>Unbiased ratings on 8,500+ products — from EVs to air fryers. No ads from the brands we review.</p>
+          <a href="#" class="cta">See the winners</a>
+        </div>
+        <div class="pic"></div>
+      </div>
+
+      <div class="section-head">
+        <h2>Latest Reviews</h2>
+        <a href="#">View all &rsaquo;</a>
+      </div>
+
+      <div class="cards">
+        <article class="card">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&w=600&q=60')"></div>
+          <div class="body">
+            <div class="cat">Electronics</div>
+            <h3>65" OLED TVs — 2026 Ratings</h3>
+            <div class="rating">
+              <span class="score good">92</span>
+              <span class="label">Overall Score · 14 models tested</span>
+            </div>
+            <div class="lock">&#128274; Full ratings available to members</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1571068316344-75bc76f77890?auto=format&fit=crop&w=600&q=60')"></div>
+          <div class="body">
+            <div class="cat">Appliances</div>
+            <h3>Front-Load Washing Machines</h3>
+            <div class="rating">
+              <span class="score good">88</span>
+              <span class="label">Overall Score · 22 models tested</span>
+            </div>
+            <div class="lock">&#128274; Full ratings available to members</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=60')"></div>
+          <div class="body">
+            <div class="cat">Cars</div>
+            <h3>Best Electric SUVs for 2026</h3>
+            <div class="rating">
+              <span class="score mid">79</span>
+              <span class="label">Road Test Score · 18 models</span>
+            </div>
+            <div class="lock">&#128274; Full ratings available to members</div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="img" style="background-image:url('https://images.unsplash.com/photo-1585515320310-259814833e62?auto=format&fit=crop&w=600&q=60')"></div>
+          <div class="body">
+            <div class="cat">Home &amp; Garden</div>
+            <h3>Robot Vacuums Worth Buying</h3>
+            <div class="rating">
+              <span class="score good">85</span>
+              <span class="label">Overall Score · 31 models tested</span>
+            </div>
+            <div class="lock">&#128274; Full ratings available to members</div>
+          </div>
+        </article>
+      </div>
+    </main>
+
+    <!-- Sidebar with the "ads" mentioned in the concept -->
+    <aside>
+      <div class="ad">
+        <div class="tag">Membership</div>
+        <div class="ad-membership">
+          <h4>Your membership has lapsed</h4>
+          <p>Unlock all 8,500+ ratings, buying guides, and exclusive deals.</p>
+          <div class="price">$29<small>/year</small></div>
+          <div class="go">Resubscribe now</div>
+        </div>
+      </div>
+
+      <div class="ad">
+        <div class="tag">Advertisement</div>
+        <div class="ad-house"><div class="box">300 × 250</div></div>
+      </div>
+
+      <div class="ad">
+        <div class="tag">Advertisement</div>
+        <div class="ad-house"><div class="box">300 × 250</div></div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <div>
+        <h5>Products</h5>
+        <a href="#">Cars</a><a href="#">Appliances</a><a href="#">Electronics</a><a href="#">Health</a>
+      </div>
+      <div>
+        <h5>About</h5>
+        <a href="#">Our Mission</a><a href="#">How We Test</a><a href="#">Newsroom</a><a href="#">Careers</a>
+      </div>
+      <div>
+        <h5>Membership</h5>
+        <a href="#">Join</a><a href="#">Renew</a><a href="#">Gift a Membership</a><a href="#">Digital Access</a>
+      </div>
+      <div>
+        <h5>Follow</h5>
+        <a href="#">Newsletter</a><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">YouTube</a>
+      </div>
+      <div class="fine">
+        © 2026 Consumer Reports, Inc. — This is a fictional demo page built to showcase an Ada proactive engagement. Not affiliated with Consumer Reports.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================= -->
+  <!--  ADA EMBED + PROACTIVE                                        -->
+  <!-- ============================================================= -->
+  <script>
+    // Grab the first name that's already rendered on the page (profile menu).
+    function getFirstNameFromPage() {
+      var el = document.getElementById('profileName');
+      if (!el) return 'there';
+      return (el.textContent || '').trim().split(/\s+/)[0] || 'there';
+    }
+
+    // Keep the avatar initial in sync with whatever name is on the page.
+    (function syncAvatar() {
+      var name = getFirstNameFromPage();
+      var av = document.getElementById('profileAvatar');
+      if (av) av.textContent = name.charAt(0).toUpperCase();
+    })();
+
+    var proactiveFired = false;
+
+    // force=true is used by the manual replay button to bypass the once-only guard.
+    function fireProactive(force) {
+      if (proactiveFired && !force) return;   // fire exactly once on load (stops flicker)
+      if (!window.adaEmbed || typeof window.adaEmbed.triggerProactive !== 'function') return;
+      proactiveFired = true;
+      var firstname = getFirstNameFromPage();
+      window.adaEmbed.triggerProactive({
+        messageKey: "proactive_membership",
+        params: { "firstname": firstname }
+      });
+    }
+
+    // Ada settings — adaReadyCallback can fire more than once (e.g. after the widget
+    // changes state), so we schedule a single deferred trigger and let the guard above
+    // swallow any repeats. Re-triggering is what makes the proactive flicker.
+    var proactiveScheduled = false;
+    window.adaSettings = {
+      adaReadyCallback: function () {
+        if (proactiveScheduled) return;
+        proactiveScheduled = true;
+        // Small delay so the launcher is painted before the proactive appears.
+        setTimeout(function () { fireProactive(false); }, 800);
+      }
+    };
+
+    // Manual replay button (handy for live demos) — bypasses the guard.
+    document.getElementById('replayBtn').addEventListener('click', function () {
+      fireProactive(true);
+    });
+  </script>
+
+  <!-- Ada Embed script for the "chrisb" instance -->
+  <script
+    id="__ada"
+    data-handle="chrisb"
+    src="https://static.ada.support/embed2.js">
+  </script>
+
+</body>
+</html>
